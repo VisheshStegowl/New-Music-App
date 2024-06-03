@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "909695087850",
+    "firebase_url": "https://alajazamobileapp-80452-default-rtdb.firebaseio.com",
+    "project_id": "alajazamobileapp-80452",
+    "storage_bucket": "alajazamobileapp-80452.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:909695087850:android:5ee31fb67ace874f6b5393",
+        "android_client_info": {
+          "package_name": "com.Ala_Jaza"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGVFiMAGUzdmm7junCRHBZ3likGhlnftw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
