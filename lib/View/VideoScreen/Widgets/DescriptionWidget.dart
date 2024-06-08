@@ -1,9 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:new_music_app/Controller/HomeController.dart';
 import 'package:new_music_app/Controller/VideoController.dart';
 import 'package:new_music_app/Utils/Styling/AppColors.dart';
 import 'package:new_music_app/Utils/Widgets/AppTextWidget.dart';
@@ -51,7 +48,7 @@ class _DescriptionWidgetState extends State<DescriptionWidget> {
               ),
               5.verticalSpace,
               AppTextWidget(
-                txtTitle: widget.videoDescription ?? '',
+                txtTitle: widget.videoDescription,
                 fontSize: 12,
                 fontWeight: FontWeight.w400,
                 txtColor: AppColors.white,
@@ -113,7 +110,7 @@ class _DescriptionWidgetState extends State<DescriptionWidget> {
                       ),
                       itemBuilder: (context, index) {
                         List<data.Data> videoData = [];
-                        videoData.addAll(widget.datas ?? []);
+                        videoData.addAll(widget.datas);
                         videoData.removeWhere(
                             (element) => element.videosId == widget.videoId);
 

@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'dart:ui';
 
@@ -45,5 +46,40 @@ class AdService {
         }
       },
     );
+  }
+
+  NativeAd? nativeAd;
+  bool _nativeAdIsLoaded = false;
+
+  // TODO: replace this test ad unit with your own ad unit.
+  final String _adUnitId = Platform.isAndroid
+      ? 'ca-app-pub-3940256099942544/2247696110'
+      : 'ca-app-pub-3940256099942544/3986624511';
+
+  /// Loads a native ad.
+  void createNativeAd() {
+    try {
+      nativeAd = NativeAd(
+        adUnitId: _adUnitId,
+        listener: NativeAdListener(
+          onAdLoaded: (ad) {
+            debugPrint('$NativeAd loaded.');
+
+            _nativeAdIsLoaded = true;
+          },
+          onAdFailedToLoad: (ad, error) {
+            // Dispose the ad here to free resources.
+            debugPrint('$NativeAd failed to load: $error');
+            ad.dispose();
+          },
+        ),
+        request: const AdRequest(),
+        nativeTemplateStyle:
+            NativeTemplateStyle(templateType: TemplateType.small),
+        // Styling
+      )..load();
+    } catch (e) {
+      log('', name: 'native ad error', error: e.toString());
+    }
   }
 }

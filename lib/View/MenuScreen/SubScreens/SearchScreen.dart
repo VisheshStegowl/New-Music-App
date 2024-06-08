@@ -1,13 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:new_music_app/Controller/HomeController.dart';
 import 'package:new_music_app/Controller/MenuPageController.dart';
 import 'package:new_music_app/Utils/Constants/AppAssets.dart';
-import 'package:new_music_app/Utils/Models/HomeDataModel.dart';
 import 'package:new_music_app/Utils/Styling/AppColors.dart';
 import 'package:new_music_app/Utils/Widgets/AppLoder.dart';
 import 'package:new_music_app/Utils/Widgets/AppNavigationBar.dart';
@@ -109,7 +105,7 @@ class SearchScreen extends GetView<MenuPageController> {
                                         Border.all(color: AppColors.appButton)),
                                 labelColor: Colors.white,
                                 unselectedLabelColor: Colors.white,
-                                tabs: [
+                                tabs:const [
                                   Tab(
                                     text: "Songs",
                                   ),
@@ -129,14 +125,14 @@ class SearchScreen extends GetView<MenuPageController> {
                               child: TabBarView(
                                 children: [
                                   SingleChildScrollView(
-                                    physics: ClampingScrollPhysics(),
+                                    physics:const ClampingScrollPhysics(),
                                     child: Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         20.verticalSpace,
                                         ListView.builder(
                                           physics:
-                                              NeverScrollableScrollPhysics(),
+                                             const NeverScrollableScrollPhysics(),
                                           itemCount: controller.searchSongResult
                                                   .value?.data?.length ??
                                               0,
@@ -267,9 +263,9 @@ class SearchScreen extends GetView<MenuPageController> {
                                       ],
                                     ),
                                   ),
-                                  SearchAlbumTab(),
+                                  const SearchAlbumTab(),
                                   SingleChildScrollView(
-                                    physics: ClampingScrollPhysics(),
+                                    physics:const ClampingScrollPhysics(),
                                     child: Column(
                                       children: [
                                         GridView.builder(
@@ -315,8 +311,7 @@ class SearchScreen extends GetView<MenuPageController> {
                                                                 .value
                                                                 ?.data
                                                             as List<
-                                                                data.Data> ??
-                                                        [],
+                                                                data.Data>,
                                                     videoUrl: controller
                                                             .searchVideoResult
                                                             .value
@@ -370,7 +365,7 @@ class SearchScreen extends GetView<MenuPageController> {
                                                       decoration: BoxDecoration(
                                                           gradient:
                                                               LinearGradient(
-                                                                  stops: [
+                                                                  stops: const [
                                                                     0.6,
                                                                     0.75,
                                                                     0.8
@@ -426,7 +421,7 @@ class SearchScreen extends GetView<MenuPageController> {
             ),
           ),
           Obx(() =>
-              Visibility(visible: controller.loader.value, child: AppLoder()))
+              Visibility(visible: controller.loader.value, child:const AppLoder()))
         ],
       ),
     );

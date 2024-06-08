@@ -1,22 +1,10 @@
-import 'package:assets_audio_player/assets_audio_player.dart';
-import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:new_music_app/Controller/BaseController.dart';
-import 'package:new_music_app/Controller/HomeController.dart';
-import 'package:new_music_app/Controller/RadioController.dart';
-import 'package:new_music_app/Utils/Constants/AppAssets.dart';
 import 'package:new_music_app/Utils/Constants/AppConst.dart';
-import 'package:new_music_app/Utils/Constants/AppExtension.dart';
-import 'package:new_music_app/Utils/Constants/CustomSnackBar.dart';
 import 'package:new_music_app/Utils/Services/AdService.dart';
-import 'package:new_music_app/Utils/Styling/AppColors.dart';
 import 'package:new_music_app/Utils/Widgets/AnimatedBottomsheet.dart';
 import 'package:new_music_app/Utils/Widgets/AppNavigationBar.dart';
-import 'package:new_music_app/Utils/Widgets/AppTextWidget.dart';
-import 'package:new_music_app/Utils/Widgets/TestVideo.dart';
 
 class AppNavigationScreen extends StatefulWidget {
   const AppNavigationScreen({super.key});

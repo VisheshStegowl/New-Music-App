@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:new_music_app/Controller/RadioController.dart';
@@ -160,7 +158,7 @@ class RadioScreen extends GetView<RadioController> {
                             decoration: const BoxDecoration(
                                 color: AppColors.white, shape: BoxShape.circle),
                             child: Icon(
-                              controller.audioPlayer.isPlaying.value ?? false
+                              controller.audioPlayer.isPlaying.value
                                   ? Icons.pause
                                   : Icons.play_arrow,
                               size: 40.r,

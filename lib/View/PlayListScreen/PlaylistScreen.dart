@@ -1,15 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:new_music_app/Controller/BaseController.dart';
-import 'package:new_music_app/Controller/HomeController.dart';
 import 'package:new_music_app/Controller/PlayListController.dart';
 import 'package:new_music_app/Utils/Constants/AppAssets.dart';
 import 'package:new_music_app/Utils/Constants/AppConst.dart';
 import 'package:new_music_app/Utils/Styling/AppColors.dart';
 import 'package:new_music_app/Utils/Widgets/AppButtonWidget.dart';
-import 'package:new_music_app/Utils/Widgets/AppNavigationScreen.dart';
 import 'package:new_music_app/Utils/Widgets/AppSearchField.dart';
 import 'package:new_music_app/Utils/Widgets/AppTextWidget.dart';
 import 'package:new_music_app/View/HomeScreen/Widget/BannerWidget.dart';
@@ -89,7 +86,7 @@ class PlayListScreen extends GetView<PlayListController> {
                           onDelete: () {
                             Get.dialog(AlertDialog.adaptive(
                               backgroundColor: AppColors.black,
-                              content: AppTextWidget(
+                              content: const AppTextWidget(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w800,
                                 txtColor: AppColors.appButton,

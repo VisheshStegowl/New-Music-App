@@ -13,7 +13,6 @@ import 'package:new_music_app/Utils/Widgets/AppLoder.dart';
 import 'package:new_music_app/Utils/Widgets/AppNavigationBar.dart';
 import 'package:new_music_app/Utils/Widgets/AppSearchField.dart';
 import 'package:new_music_app/Utils/Widgets/AppTextWidget.dart';
-import 'package:new_music_app/Utils/Widgets/Dialogs/AddPlaylistDialog.dart';
 import 'package:new_music_app/Utils/Widgets/Dialogs/SongAddToDialog.dart';
 import 'package:new_music_app/Utils/Widgets/SongListWidget.dart';
 import 'package:new_music_app/View/HomeScreen/SongPlayScreen.dart';
@@ -124,11 +123,9 @@ class PlayListSongScreen extends GetView<PlayListController> {
                                         AppConst.liveVideoUrl.value = false;
                                         Get.find<HomeController>().playSong(
                                             assests: controller
-                                                        .playListSongModel
-                                                        .value
-                                                        ?.data
-                                                    as List<AssestsSong> ??
-                                                [],
+                                                .playListSongModel
+                                                .value
+                                                ?.data as List<AssestsSong>,
                                             index: index);
                                         Navigator.push(context,
                                             PageRouteBuilder(
