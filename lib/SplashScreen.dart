@@ -32,7 +32,7 @@ class _SplashScreen extends State<SplashScreen> {
     Future.delayed(const Duration(seconds: 3), () {
       Get.put(AdService(), permanent: true);
       Get.find<AdService>().createBannerAd();
-      Get.find<AdService>().createNativeAd();
+      // Get.find<AdService>().createNativeAd();
       if (token == null) {
         if (UserPreference.getValue(key: PrefKeys.firstTime)) {
           Get.offAllNamed(RoutesName.walkthroughScreen);

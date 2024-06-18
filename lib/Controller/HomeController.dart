@@ -1,14 +1,11 @@
-import 'dart:convert';
 import 'dart:developer';
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:get/state_manager.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:new_music_app/Controller/BaseController.dart';
 import 'package:new_music_app/Controller/RadioController.dart';
-import 'package:new_music_app/Controller/VideoController.dart';
 import 'package:new_music_app/Utils/ChopperClientService/HomeChopperService.dart';
 import 'package:new_music_app/Utils/Constants/AppConst.dart';
 import 'package:new_music_app/Utils/Constants/AppExtension.dart';
@@ -17,7 +14,6 @@ import 'package:new_music_app/Utils/Models/FavoritesSongListModel.dart' as data;
 import 'package:new_music_app/Utils/Models/FavouritesDataModel.dart';
 import 'package:new_music_app/Utils/Models/HomeBannerModel.dart';
 import 'package:new_music_app/Utils/Models/HomeDataModel.dart';
-import 'package:new_music_app/Utils/Models/LiveVideoModel.dart';
 import 'package:new_music_app/Utils/Services/AdService.dart';
 import 'package:new_music_app/Utils/SharedPreferences/PrefKeys.dart';
 import 'package:new_music_app/Utils/SharedPreferences/shared_preferences.dart';
@@ -43,7 +39,6 @@ class HomeController extends BaseController {
   @override
   onInit() async {
     super.onInit();
-    print("this is banner height ${Get.find<AdService>().bannerAd}");
     MobileAds.instance.updateRequestConfiguration(RequestConfiguration(
         testDeviceIds: ["71777c03-19f7-45d7-9180-7ca6266beabb"]));
     if (audioPlayer.current.hasValue) {

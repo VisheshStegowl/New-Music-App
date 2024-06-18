@@ -1,25 +1,20 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:new_music_app/Controller/HomeController.dart';
-import 'package:new_music_app/Controller/PlayListController.dart';
 import 'package:new_music_app/Utils/Constants/AppAssets.dart';
-import 'package:new_music_app/Utils/Constants/AppConst.dart';
 import 'package:new_music_app/Utils/Constants/CustomSnackBar.dart';
 import 'package:new_music_app/Utils/Models/HomeDataModel.dart';
 import 'package:new_music_app/Utils/Services/AdService.dart';
 import 'package:new_music_app/Utils/Styling/AppColors.dart';
 import 'package:new_music_app/Utils/Widgets/AnimatedBottomsheet.dart';
-import 'package:new_music_app/Utils/Widgets/AppButtonWidget.dart';
 import 'package:new_music_app/Utils/Widgets/AppLoder.dart';
 import 'package:new_music_app/Utils/Widgets/AppNavigationBar.dart';
 import 'package:new_music_app/Utils/Widgets/AppTextWidget.dart';
-import 'package:new_music_app/Utils/Widgets/CachedNetworkImageWidget.dart';
 import 'package:new_music_app/Utils/Widgets/Dialogs/AddPlaylistDialog.dart';
-import 'package:new_music_app/Utils/Widgets/Dialogs/NoExistingPlayListFoundDialog.dart';
 import 'package:new_music_app/Utils/Widgets/Dialogs/SongAddToDialog.dart';
 import 'package:new_music_app/Utils/Widgets/SongListWidget.dart';
 import 'package:new_music_app/Utils/Widgets/TitleBackButtonWidget.dart';
@@ -35,6 +30,7 @@ class SongViewList extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
+    List<NativeAd> nativeAd = [];
     return Stack(
       children: [
         SafeArea(
@@ -53,7 +49,6 @@ class SongViewList extends GetView<HomeController> {
             child: GetBuilder<HomeController>(
                 init: controller,
                 builder: (context) {
-                  int coutindex = 0;
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -62,196 +57,87 @@ class SongViewList extends GetView<HomeController> {
                       ),
                       Expanded(
                         child: assests?.length != 0
-                            ? ListView.builder(
+                            ? ListView.separated(
                                 shrinkWrap: true,
                                 physics: const ClampingScrollPhysics(),
-                                itemCount:
-                                    assests?.length != 0 ? assests?.length : 0,
+                                itemCount: assests?.length != 0
+                                    ? assests?.length ?? 0
+                                    : 0,
                                 itemBuilder: (context, index) {
                                   if (assests?.length != 0) {
-                                    if (coutindex == 9) {
-                                      print("object");
-                                      coutindex = 0;
-                                      return Column(
-                                        children: [
-                                          Get.find<AdService>().nativeAd != null
-                                              ? AdWidget(
-                                                  ad: Get.find<AdService>()
-                                                      .nativeAd!)
-                                              : Container(
-                                                  height: 200.h,
-                                                  width: double.maxFinite,
-                                                  color: AppColors.appButton,
-                                                ),
-                                          SongListWidget(
-                                            gifWidget: Get.find<
-                                                        HomeController>()
-                                                    .audioPlayer
-                                                    .current
-                                                    .hasValue &&
-                                                assests?[index].songName ==
-                                                    Get.find<HomeController>()
-                                                        .audioPlayer
-                                                        .current
-                                                        .value
-                                                        ?.audio
-                                                        .audio
-                                                        .metas
-                                                        .title,
-                                            onOptionTap: () {
-                                              Get.dialog(SongAddToDialog(
-                                                onFavorites: () async {
-                                                  if (assests?[index]
-                                                          .favouritesStatus ??
-                                                      false) {
-                                                    Get.back();
-                                                    Utility.showSnackBar(
-                                                        "This Song is already in Favorites",
-                                                        isError: true);
-                                                  } else {
-                                                    Get.back();
-                                                    assests?[index]
-                                                        .favouritesStatus = await Get
-                                                            .find<
-                                                                HomeController>()
-                                                        .addRemoveFavourites(
-                                                            menuId: assests?[
-                                                                        index]
-                                                                    .menuId ??
-                                                                0,
-                                                            songId: assests?[
-                                                                        index]
-                                                                    .songId ??
-                                                                0);
-                                                  }
-                                                },
-                                                onPlaylist: () {
-                                                  Get.back();
-                                                  Get.dialog(AddPlaylistDialog(
-                                                    menuId: assests?[index]
-                                                            .menuId ??
-                                                        0,
-                                                    songId: assests?[index]
-                                                            .songId ??
-                                                        0,
-                                                  ));
-                                                },
-                                              ));
-                                            },
-                                            onTap: () async {
-                                              await controller.playSong(
-                                                  assests: assests ?? [],
-                                                  index: index);
-                                              Navigator.push(context,
-                                                  PageRouteBuilder(pageBuilder:
-                                                      (_, __, ___) {
-                                                return SongPlayScreen(
-                                                  menuId:
-                                                      assests?[index].menuId ??
-                                                          0,
-                                                  songId:
-                                                      assests?[index].songId ??
-                                                          0,
-                                                  // index: index ?? 0,
-                                                  // assests: assests,
-                                                );
-                                              }));
-                                            },
-                                            imageUrl: assests?[index]
-                                                    .songImage ??
-                                                assests?[index].categoryImage ??
-                                                '',
-                                            title: assests?[index].songName ??
-                                                assests?[index].categoryName ??
-                                                '',
-                                            subTitle:
-                                                assests?[index].songArtist ??
-                                                    '',
-                                          )
-                                        ],
-                                      );
-                                    } else {
-                                      coutindex = coutindex + 1;
-                                      print(coutindex);
-                                      return SongListWidget(
-                                        gifWidget: Get.find<HomeController>()
-                                                .audioPlayer
-                                                .current
-                                                .hasValue &&
-                                            assests?[index].songName ==
-                                                Get.find<HomeController>()
-                                                    .audioPlayer
-                                                    .current
-                                                    .value
-                                                    ?.audio
-                                                    .audio
-                                                    .metas
-                                                    .title,
-                                        onOptionTap: () {
-                                          Get.dialog(SongAddToDialog(
-                                            onFavorites: () async {
-                                              if (assests?[index]
-                                                      .favouritesStatus ??
-                                                  false) {
-                                                Get.back();
-                                                Utility.showSnackBar(
-                                                    "This Song is already in Favorites",
-                                                    isError: true);
-                                              } else {
-                                                Get.back();
-                                                assests?[index]
-                                                        .favouritesStatus =
-                                                    await Get.find<
-                                                            HomeController>()
-                                                        .addRemoveFavourites(
-                                                            menuId: assests?[
-                                                                        index]
-                                                                    .menuId ??
-                                                                0,
-                                                            songId: assests?[
-                                                                        index]
-                                                                    .songId ??
-                                                                0);
-                                              }
-                                            },
-                                            onPlaylist: () {
+                                    return SongListWidget(
+                                      gifWidget: Get.find<HomeController>()
+                                              .audioPlayer
+                                              .current
+                                              .hasValue &&
+                                          assests?[index].songName ==
+                                              Get.find<HomeController>()
+                                                  .audioPlayer
+                                                  .current
+                                                  .value
+                                                  ?.audio
+                                                  .audio
+                                                  .metas
+                                                  .title,
+                                      onOptionTap: () {
+                                        Get.dialog(SongAddToDialog(
+                                          onFavorites: () async {
+                                            if (assests?[index]
+                                                    .favouritesStatus ??
+                                                false) {
                                               Get.back();
-                                              Get.dialog(AddPlaylistDialog(
-                                                menuId:
-                                                    assests?[index].menuId ?? 0,
-                                                songId:
-                                                    assests?[index].songId ?? 0,
-                                              ));
-                                            },
-                                          ));
-                                        },
-                                        onTap: () async {
-                                          await controller.playSong(
-                                              assests: assests ?? [],
-                                              index: index);
-                                          Navigator.push(context,
-                                              PageRouteBuilder(
-                                                  pageBuilder: (_, __, ___) {
-                                            return SongPlayScreen(
+                                              Utility.showSnackBar(
+                                                  "This Song is already in Favorites",
+                                                  isError: true);
+                                            } else {
+                                              Get.back();
+                                              assests?[index]
+                                                  .favouritesStatus = await Get
+                                                      .find<HomeController>()
+                                                  .addRemoveFavourites(
+                                                      menuId: assests?[index]
+                                                              .menuId ??
+                                                          0,
+                                                      songId: assests?[index]
+                                                              .songId ??
+                                                          0);
+                                            }
+                                          },
+                                          onPlaylist: () {
+                                            Get.back();
+                                            Get.dialog(AddPlaylistDialog(
                                               menuId:
                                                   assests?[index].menuId ?? 0,
                                               songId:
                                                   assests?[index].songId ?? 0,
-                                              // index: index ?? 0,
-                                              // assests: assests,
-                                            );
-                                          }));
-                                        },
-                                        imageUrl: assests?[index].songImage ??
-                                            assests?[index].categoryImage ??
-                                            '',
-                                        title: assests?[index].songName ??
-                                            assests?[index].categoryName ??
-                                            '',
-                                        subTitle:
-                                            assests?[index].songArtist ?? '',
-                                      );
-                                    }
+                                            ));
+                                          },
+                                        ));
+                                      },
+                                      onTap: () async {
+                                        await controller.playSong(
+                                            assests: assests ?? [],
+                                            index: index);
+                                        Navigator.push(context,
+                                            PageRouteBuilder(
+                                                pageBuilder: (_, __, ___) {
+                                          return SongPlayScreen(
+                                            menuId: assests?[index].menuId ?? 0,
+                                            songId: assests?[index].songId ?? 0,
+                                            // index: index ?? 0,
+                                            // assests: assests,
+                                          );
+                                        }));
+                                      },
+                                      imageUrl: assests?[index].songImage ??
+                                          assests?[index].categoryImage ??
+                                          '',
+                                      title: assests?[index].songName ??
+                                          assests?[index].categoryName ??
+                                          '',
+                                      subTitle:
+                                          assests?[index].songArtist ?? '',
+                                    );
                                   } else {
                                     return const Column(
                                       mainAxisAlignment:
@@ -266,6 +152,40 @@ class SongViewList extends GetView<HomeController> {
                                         ),
                                       ],
                                     );
+                                  }
+                                },
+                                separatorBuilder:
+                                    (BuildContext context, int index) {
+                                  if ((index + 1) % 6 == 0) {
+                                    Get.find<AdService>()
+                                        .bannerAds
+                                        .add(BannerAd(
+                                          size: AdSize.fullBanner,
+                                          adUnitId: Platform.isAndroid
+                                              ? "ca-app-pub-3940256099942544/6300978111"
+                                              : 'ca-app-pub-3940256099942544/2934735716',
+                                          listener: Get.find<AdService>()
+                                              .showBannerAd(),
+                                          request: const AdRequest(),
+                                        )..load());
+
+                                    // print(
+                                    //     "this is nativeads called ${Get.find<AdService>().nativeads.length}");
+                                    return Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        const Divider(),
+                                        SizedBox(
+                                            height: 80.h,
+                                            child: AdWidget(
+                                                ad: Get.find<AdService>()
+                                                    .bannerAds
+                                                    .first)),
+                                        const Divider()
+                                      ],
+                                    );
+                                  } else {
+                                    return const Divider();
                                   }
                                 },
                               )

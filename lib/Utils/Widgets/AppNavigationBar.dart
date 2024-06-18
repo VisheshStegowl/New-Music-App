@@ -5,13 +5,10 @@ import 'package:get/get.dart';
 import 'package:new_music_app/Controller/BaseController.dart';
 import 'package:new_music_app/Utils/Constants/AppAssets.dart';
 import 'package:new_music_app/Utils/Constants/AppConst.dart';
-import 'package:new_music_app/Utils/Router/RouteName.dart';
+import 'package:new_music_app/Utils/Services/AdService.dart';
 import 'package:new_music_app/Utils/Styling/AppColors.dart';
-import 'package:new_music_app/Utils/Widgets/AdScreen.dart';
 import 'package:new_music_app/Utils/Widgets/AppNavigationScreen.dart';
-import 'package:new_music_app/View/HomeScreen/HomeScreen.dart';
 import 'package:new_music_app/View/LiveVideoScreen/LiveVideoScreen.dart';
-import 'package:new_music_app/View/VideoScreen/VideoListScreen.dart';
 
 class AppNavigationBar extends StatefulWidget implements PreferredSizeWidget {
   final AppBar defaultAppBar;
@@ -73,6 +70,9 @@ class _AppNavigationBarState extends State<AppNavigationBar> {
                                   : AppColors.white,
                             ),
                             onTap: () {
+                              Get.find<AdService>().bannerAd = null;
+                              Get.find<AdService>().createBannerAd();
+
                               AppConst.currentTabIndex = 0;
                               setState(() {});
                               Navigator.push(context,
@@ -87,6 +87,9 @@ class _AppNavigationBarState extends State<AppNavigationBar> {
                         SizedBox(
                           child: InkWell(
                             onTap: () {
+                              Get.find<AdService>().bannerAd = null;
+                              Get.find<AdService>().createBannerAd();
+
                               AppConst.currentTabIndex = 1;
                               AppConst.liveVideoUrl.value = true;
                               controller.backGroundStreamController.sink
@@ -114,6 +117,8 @@ class _AppNavigationBarState extends State<AppNavigationBar> {
                                     ? AppColors.error
                                     : AppColors.white),
                             onTap: () {
+                              Get.find<AdService>().bannerAd = null;
+                              Get.find<AdService>().createBannerAd();
                               AppConst.currentTabIndex = 2;
                               controller.update();
                               setState(() {});
@@ -133,6 +138,9 @@ class _AppNavigationBarState extends State<AppNavigationBar> {
                                     ? AppColors.error
                                     : AppColors.white),
                             onTap: () {
+                              Get.find<AdService>().bannerAd = null;
+                              Get.find<AdService>().createBannerAd();
+
                               AppConst.currentTabIndex = 3;
                               setState(() {});
                               Navigator.push(context,
@@ -151,6 +159,8 @@ class _AppNavigationBarState extends State<AppNavigationBar> {
                                     ? AppColors.error
                                     : AppColors.white),
                             onTap: () {
+                              Get.find<AdService>().bannerAd = null;
+                              Get.find<AdService>().createBannerAd();
                               AppConst.currentTabIndex = 4;
                               setState(() {});
                               Navigator.push(context,
@@ -169,6 +179,9 @@ class _AppNavigationBarState extends State<AppNavigationBar> {
                                     ? AppColors.error
                                     : AppColors.white),
                             onTap: () {
+                              Get.find<AdService>().bannerAd = null;
+                              Get.find<AdService>().createBannerAd();
+
                               AppConst.currentTabIndex = 5;
                               setState(() {});
                               Navigator.push(context,
@@ -194,6 +207,9 @@ class _AppNavigationBarState extends State<AppNavigationBar> {
                             //         ? AppColors.error
                             //         : AppColors.white),
                             onTap: () {
+                              Get.find<AdService>().bannerAd = null;
+                              Get.find<AdService>().createBannerAd();
+
                               AppConst.currentTabIndex = 6;
                               setState(() {});
                               Navigator.push(context,

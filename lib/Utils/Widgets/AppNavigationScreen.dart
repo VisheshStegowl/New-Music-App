@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:new_music_app/Controller/BaseController.dart';
 import 'package:new_music_app/Utils/Constants/AppConst.dart';
 import 'package:new_music_app/Utils/Services/AdService.dart';
+import 'package:new_music_app/Utils/Styling/AppColors.dart';
 import 'package:new_music_app/Utils/Widgets/AnimatedBottomsheet.dart';
 import 'package:new_music_app/Utils/Widgets/AppNavigationBar.dart';
 
@@ -51,7 +53,24 @@ class _AppNavigationScreenState extends State<AppNavigationScreen>
                   Expanded(child: controller.tabs[AppConst.currentTabIndex]),
                 ],
               ),
-              bottomNavigationBar: AnimatedBottomSheet(),
+              bottomNavigationBar: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  AnimatedBottomSheet(),
+                  if (Get.find<AdService>().bannerAd != null)
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: SafeArea(
+                        child: Container(
+                          color: AppColors.transparent,
+                          height: 60,
+                          width: double.maxFinite,
+                          child: AdWidget(ad: Get.find<AdService>().bannerAd!),
+                        ),
+                      ),
+                    )
+                ],
+              ),
             );
           }),
     );

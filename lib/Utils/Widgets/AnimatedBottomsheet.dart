@@ -75,7 +75,7 @@ class _AnimatedBottomSheetState extends State<AnimatedBottomSheet>
                       animation: _animation,
                       builder: (context, child) {
                         return Container(
-                          height: _animation.value * 250.h,
+                          height: _animation.value * 220.h,
                           // Adjust height based on animation value
                           color: Colors.black,
                           padding: EdgeInsets.symmetric(vertical: 16.h),
@@ -217,7 +217,7 @@ class _AnimatedBottomSheetState extends State<AnimatedBottomSheet>
                                           ? AppAssets.playButtonImage
                                           : AppAssets.puaseButtonImage,
                                       height: 40.h,
-                                      width: 45.w,
+                                      width: 50.w,
                                     ),
                                   ),
                                   InkWell(
@@ -260,21 +260,24 @@ class _AnimatedBottomSheetState extends State<AnimatedBottomSheet>
                                       color: AppColors.white,
                                     ),
                                   ),
-                                  IconButton(
-                                    icon: Icon(
-                                      Icons.shuffle,
-                                      color: Get.find<HomeController>()
-                                              .audioPlayer
-                                              .shuffle
-                                          ? AppColors.appButton
-                                          : AppColors.white,
+                                  Container(
+                                    width: 25.w,
+                                    child: IconButton(
+                                      icon: Icon(
+                                        Icons.shuffle,
+                                        color: Get.find<HomeController>()
+                                                .audioPlayer
+                                                .shuffle
+                                            ? AppColors.appButton
+                                            : AppColors.white,
+                                      ),
+                                      onPressed: () {
+                                        Get.find<HomeController>()
+                                            .audioPlayer
+                                            .toggleShuffle();
+                                        Get.find<HomeController>().update();
+                                      },
                                     ),
-                                    onPressed: () {
-                                      Get.find<HomeController>()
-                                          .audioPlayer
-                                          .toggleShuffle();
-                                      Get.find<HomeController>().update();
-                                    },
                                   ),
                                 ],
                               ),
@@ -317,7 +320,7 @@ class _AnimatedBottomSheetState extends State<AnimatedBottomSheet>
                       animation: _animation,
                       builder: (context, child) {
                         return Container(
-                          height: _animation.value * 250.h,
+                          height: _animation.value * 220.h,
                           // Adjust height based on animation value
                           color: Colors.black,
                           padding: EdgeInsets.symmetric(vertical: 16.h),

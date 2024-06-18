@@ -102,7 +102,6 @@ class SongListWidget extends StatelessWidget {
           ),
         ),
         10.verticalSpace,
-        const Divider()
       ],
     );
   }

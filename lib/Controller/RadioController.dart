@@ -35,8 +35,11 @@ class RadioController extends BaseController {
       if (response.isSuccessful) {
         radioModel.value = response.body;
         updateButton(button: BottomDisplay.radio);
+        AppConst.bottomDisplay = BottomDisplay.radio;
+        Get.find<BaseController>().mainStreamController.sink.add(true);
         await audioPlayer.open(
-          Audio.network(radioModel.value?.data?[0].song ?? '',
+          Audio.liveStream("https://radio4.domint.net:9072/stream",
+              // radioModel.value?.data?[0].song ?? '',
               metas: Metas(
                   title: radioModel.value?.data?[0].songName,
                   artist: radioModel.value?.data?[0].songName,

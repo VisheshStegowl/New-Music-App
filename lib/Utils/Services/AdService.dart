@@ -1,7 +1,5 @@
 import 'dart:developer';
 import 'dart:io';
-import 'dart:ui';
-
 import 'package:flutter/foundation.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 
@@ -11,6 +9,7 @@ class AdService {
   /// PlatformDispatcher.instance.views.first.devicePixelRatio
 
   BannerAd? bannerAd;
+  List<BannerAd> bannerAds = [];
 
   ///Create/load/show Banner Ad
   void createBannerAd() {
@@ -22,7 +21,7 @@ class AdService {
       adUnitId: Platform.isAndroid
           ? "ca-app-pub-3940256099942544/6300978111"
           : 'ca-app-pub-3940256099942544/2934735716',
-      listener: _showBannerAd(),
+      listener: showBannerAd(),
       request: const AdRequest(),
     )..load();
     print(bannerAd);
@@ -31,7 +30,7 @@ class AdService {
   int attemptOfBnanners = 0;
 
   /// Banner ad show Controll
-  BannerAdListener _showBannerAd() {
+  BannerAdListener showBannerAd() {
     return BannerAdListener(
       onAdLoaded: (ad) {
         print("Ad Loaded:${ad.adUnitId}.");
@@ -57,29 +56,38 @@ class AdService {
       : 'ca-app-pub-3940256099942544/3986624511';
 
   /// Loads a native ad.
-  void createNativeAd() {
+  NativeAd createNativeAd() {
     try {
-      nativeAd = NativeAd(
+      // nativeAd =
+      return NativeAd(
+        nativeAdOptions:
+            NativeAdOptions(mediaAspectRatio: MediaAspectRatio.unknown),
         adUnitId: _adUnitId,
         listener: NativeAdListener(
+          onAdClicked: (ad) {
+            print(ad);
+          },
+          onAdOpened: (ad) {
+            print(ad);
+          },
           onAdLoaded: (ad) {
-            debugPrint('$NativeAd loaded.');
-
-            _nativeAdIsLoaded = true;
+            debugPrint('$ad loaded.');
           },
           onAdFailedToLoad: (ad, error) {
             // Dispose the ad here to free resources.
-            debugPrint('$NativeAd failed to load: $error');
-            ad.dispose();
+            debugPrint('$nativeAd failed to load: $error');
+            // ad.dispose();
           },
         ),
         request: const AdRequest(),
         nativeTemplateStyle:
             NativeTemplateStyle(templateType: TemplateType.small),
         // Styling
-      )..load();
+      );
+      // return nativeAd!;
     } catch (e) {
       log('', name: 'native ad error', error: e.toString());
+      rethrow;
     }
   }
 }
