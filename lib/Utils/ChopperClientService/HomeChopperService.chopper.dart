@@ -88,6 +88,46 @@ final class _$HomeChopperService extends HomeChopperService {
   }
 
   @override
+  Future<Response<CategoriesSongDataModel>> categoriesSongApi({
+    required Map<String, dynamic> param,
+    required int id,
+    required Map<String, dynamic> queryParameters,
+  }) {
+    final Uri $url = Uri.parse('audiolisting/category_id/${id}');
+    final Map<String, dynamic> $params = queryParameters;
+    final $body = param;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+      parameters: $params,
+    );
+    return client
+        .send<CategoriesSongDataModel, CategoriesSongDataModel>($request);
+  }
+
+  @override
+  Future<Response<ViewAllCategoryDataModel>> viewAllCategoriesApi({
+    required Map<String, dynamic> param,
+    required int id,
+    required Map<String, dynamic> queryParameters,
+  }) {
+    final Uri $url = Uri.parse('audiosubcategories/${id}');
+    final Map<String, dynamic> $params = queryParameters;
+    final $body = param;
+    final Request $request = Request(
+      'POST',
+      $url,
+      client.baseUrl,
+      body: $body,
+      parameters: $params,
+    );
+    return client
+        .send<ViewAllCategoryDataModel, ViewAllCategoryDataModel>($request);
+  }
+
+  @override
   Future<Response<RadioModel>> radioAudioApi({
     required Map<String, dynamic> param,
     required Map<String, dynamic> queryParameters,

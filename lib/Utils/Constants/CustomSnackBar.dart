@@ -18,7 +18,7 @@ class Utility {
             maxLine: 3,
             txtColor: AppColors.white),
         borderRadius: 10.r,
-        duration: const Duration(milliseconds: 1500),
+        duration: const Duration(milliseconds: 1000),
         margin: EdgeInsets.all(8.r),
         dismissDirection: DismissDirection.horizontal,
         snackPosition: SnackPosition.BOTTOM,

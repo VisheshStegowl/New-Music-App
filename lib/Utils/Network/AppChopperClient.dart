@@ -2,6 +2,7 @@ import 'package:chopper/chopper.dart';
 import 'package:new_music_app/Utils/ChopperClientService/AuthChopperService.dart';
 import 'package:new_music_app/Utils/ChopperClientService/HomeChopperService.dart';
 import 'package:new_music_app/Utils/Models/AddSongPlaylistDataModel.dart';
+import 'package:new_music_app/Utils/Models/CategoriesSongDataModel.dart';
 import 'package:new_music_app/Utils/Models/CreatePlayListModel.dart';
 import 'package:new_music_app/Utils/Models/FavoritesSongListModel.dart';
 import 'package:new_music_app/Utils/Models/FavouriteVideoModel.dart';
@@ -24,6 +25,7 @@ import 'package:new_music_app/Utils/Models/SocialMediaModel.dart';
 import 'package:new_music_app/Utils/Models/SponsorBannerDataModel.dart';
 import 'package:new_music_app/Utils/Models/VideoCategoryDataListModel.dart';
 import 'package:new_music_app/Utils/Models/VideoCategoryDataModel.dart';
+import 'package:new_music_app/Utils/Models/ViewAllCategoryDataModel.dart';
 import 'package:new_music_app/Utils/Models/WalkthroughDataModel.dart';
 import 'Utils/Convertors/JsonToTypeConverter.dart';
 import 'Utils/Interceptors/ApplyHeaderInterceptor.dart';
@@ -53,7 +55,8 @@ class AppChopperClient {
     }
     _client = ChopperClient(
         baseUrl: Uri.parse(
-          "https://alajazamusic.com/alajazamusicadmin/api/",
+          // "https://alajazamusic.com/alajazamusicadmin/api/",
+          "https://djkukysweetsapp.com/kukysweets/api",
         ),
         services: [
           AuthChopperService.create(),
@@ -70,6 +73,7 @@ class AppChopperClient {
             SignInModel: SignInModel.fromJson,
             HomeBannerModel: HomeBannerModel.fromJson,
             HomeDataModel: HomeDataModel.fromJson,
+            CategoriesSongDataModel: CategoriesSongDataModel.fromJson,
             VideoCategoryDataModel: VideoCategoryDataModel.fromJson,
             VideoCategoryDataListModel: VideoCategoryDataListModel.fromJson,
             RadioModel: RadioModel.fromJson,
@@ -79,6 +83,7 @@ class AppChopperClient {
             FavoriteSongListModel: FavoriteSongListModel.fromJson,
             LiveVideoModel: LiveVideoModel.fromJson,
             PlayListSongModel: PlayListSongModel.fromJson,
+            ViewAllCategoryDataModel: ViewAllCategoryDataModel.fromJson,
             FavouriteVideoModel: FavouriteVideoModel.fromJson,
             SocialMediaModel: SocialMediaModel.fromJson,
             SkipUserDataModel: SkipUserDataModel.fromJson,

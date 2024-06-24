@@ -37,8 +37,8 @@ class WalkthroughScreen extends GetView<AuthController> {
                               carouselController: controller.carouselController,
                               options: CarouselOptions(
                                   onPageChanged: (index, _) {
-                                    print(index);
-                                    index = controller.pageIndex.value;
+                                    controller.pageIndex.value = index;
+                                    controller.update();
                                   },
                                   aspectRatio: 0.4,
                                   enableInfiniteScroll: false,
@@ -56,30 +56,33 @@ class WalkthroughScreen extends GetView<AuthController> {
                               // },
                               ),
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 20.h),
-                          child: Align(
-                            alignment: AlignmentDirectional.bottomCenter,
-                            child: AppButtonWidget(
-                              width: 150.w,
-                              onPressed: () {
-                                if (controller.walkthroughDataModel?.appData
-                                        ?.length ==
-                                    controller.pageIndex.value) {
-                                  UserPreference.setValue(
-                                      key: PrefKeys.firstTime, value: false);
-                                  Get.offAllNamed(RoutesName.loginScreen);
-                                } else {
-                                  controller.carouselController.nextPage();
-                                }
-                              },
-                              padding: EdgeInsets.symmetric(vertical: 10.h),
-                              btnName: controller.walkthroughDataModel?.appData
+                        Obx(
+                          () => Padding(
+                            padding: EdgeInsets.only(bottom: 20.h),
+                            child: Align(
+                              alignment: AlignmentDirectional.bottomCenter,
+                              child: AppButtonWidget(
+                                width: 150.w,
+                                onPressed: () {
+                                  if (controller.walkthroughDataModel?.appData
                                           ?.length ==
-                                      controller.pageIndex.value
-                                  ? 'ENTER'
-                                  : "NEXT",
-                              btnColor: AppColors.appButton,
+                                      (controller.pageIndex.value + 1)) {
+                                    UserPreference.setValue(
+                                        key: PrefKeys.firstTime, value: false);
+                                    Get.offAllNamed(RoutesName.loginScreen);
+                                  } else {
+                                    controller.carouselController.nextPage();
+                                    controller.update();
+                                  }
+                                },
+                                padding: EdgeInsets.symmetric(vertical: 10.h),
+                                btnName: controller.walkthroughDataModel
+                                            ?.appData?.length ==
+                                        (controller.pageIndex.value + 1)
+                                    ? 'ENTER'
+                                    : "NEXT",
+                                btnColor: AppColors.appButton,
+                              ),
                             ),
                           ),
                         ),

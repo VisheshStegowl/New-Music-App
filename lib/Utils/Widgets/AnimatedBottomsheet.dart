@@ -120,14 +120,14 @@ class _AnimatedBottomSheetState extends State<AnimatedBottomSheet>
                                 ],
                               ),
                               AppTextWidget(
-                                txtTitle: songName ?? '',
+                                txtTitle: songName,
                                 txtColor: AppColors.appButton,
                                 fontSize: 18,
                                 fontWeight: FontWeight.w600,
                               ),
                               5.verticalSpace,
                               AppTextWidget(
-                                txtTitle: artistName ?? '',
+                                txtTitle: artistName,
                                 txtColor: AppColors.white,
                                 fontSize: 17,
                                 fontWeight: FontWeight.w600,
@@ -166,27 +166,10 @@ class _AnimatedBottomSheetState extends State<AnimatedBottomSheet>
                                   // ),
                                   InkWell(
                                     onTap: () {
-                                      // if (0 <
-                                      //     Get.find<HomeController>()
-                                      //         .currentSongIndex!
-                                      //         .value) {
-                                      //   Get.find<HomeController>()
-                                      //       .currentSongIndex!
-                                      //       .value--;
                                       Get.find<HomeController>()
                                           .audioPlayer
                                           .previous();
                                       Get.find<HomeController>().update();
-                                      // Get.find<HomeController>().playSong(
-                                      //     assests: Get.find<HomeController>()
-                                      //             .assetsSongs ??
-                                      //         [],
-                                      //     index: Get.find<HomeController>()
-                                      //             .currentSongIndex
-                                      //             ?.value ??
-                                      //         0);
-                                      Get.find<HomeController>().update();
-                                      // }
                                     },
                                     child: Image.asset(
                                       AppAssets.fastRewindImage,
@@ -196,16 +179,16 @@ class _AnimatedBottomSheetState extends State<AnimatedBottomSheet>
                                     ),
                                   ),
                                   InkWell(
-                                    onTap: () {
+                                    onTap: () async {
                                       if (Get.find<RadioController>()
                                           .audioPlayer
                                           .current
                                           .hasValue) {
-                                        Get.find<RadioController>()
+                                        await Get.find<RadioController>()
                                             .audioPlayer
-                                            .pause();
+                                            .stop();
                                       }
-                                      Get.find<HomeController>()
+                                      await Get.find<HomeController>()
                                           .audioPlayer
                                           .playOrPause();
                                     },
@@ -221,37 +204,11 @@ class _AnimatedBottomSheetState extends State<AnimatedBottomSheet>
                                     ),
                                   ),
                                   InkWell(
-                                    onTap: () {
-                                      // if (Get.find<HomeController>()
-                                      //             .assetsSongs
-                                      //             .length -
-                                      //         1 >
-                                      //     (Get.find<HomeController>()
-                                      //             .currentSongIndex
-                                      //             ?.value ??
-                                      //         1)) {
-                                      //   Get.find<HomeController>()
-                                      //       .currentSongIndex
-                                      //       ?.value++;
-
-                                      Get.find<HomeController>()
+                                    onTap: () async {
+                                      await Get.find<HomeController>()
                                           .audioPlayer
-                                          .next(stopIfLast: false);
+                                          .next();
                                       Get.find<HomeController>().update();
-                                      // Get.find<HomeController>().playSong(
-                                      //     assests: Get.find<HomeController>()
-                                      //             .assetsSongs ??
-                                      //         [],
-                                      //     index: Get.find<HomeController>()
-                                      //             .currentSongIndex
-                                      //             ?.value ??
-                                      //         0);
-                                      // } else {
-                                      //   Utility.showSnackBar(
-                                      //     'last Song',
-                                      //     isError: true,
-                                      //   );
-                                      // }
                                     },
                                     child: Image.asset(
                                       AppAssets.fastForwordImage,
@@ -292,10 +249,18 @@ class _AnimatedBottomSheetState extends State<AnimatedBottomSheet>
                 .audioPlayer
                 .builderRealtimePlayingInfos(
                     builder: (context, RealtimePlayingInfos audioPlayer) {
-              String songName =
-                  audioPlayer.current?.audio.audio.metas.title ?? '';
-              String artistName =
-                  audioPlayer.current?.audio.audio.metas.artist ?? '';
+              String songName = Get.find<RadioController>()
+                      .radioModel
+                      .value
+                      ?.data?[0]
+                      .songName ??
+                  '';
+              String artistName = Get.find<RadioController>()
+                      .radioModel
+                      .value
+                      ?.data?[0]
+                      .songName ??
+                  '';
               return isShow == false && AppConst.liveVideoUrl.value == false
                   ? InkWell(
                       onTap: () {
@@ -357,20 +322,12 @@ class _AnimatedBottomSheetState extends State<AnimatedBottomSheet>
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: <Widget>[
-                                  //     : IconButton(
-                                  //   icon: Icon(Icons.sync, color: Colors.white),
-                                  //   onPressed: () {
-                                  //     setState(() {
-                                  //       istap = true;
-                                  //     });
-                                  //   },
-                                  // ),
-
                                   InkWell(
                                     onTap: () {
                                       Get.find<RadioController>()
                                           .audioPlayer
                                           .playOrPause();
+                                      Get.find<RadioController>().update();
                                     },
                                     child: Image.asset(
                                       Get.find<RadioController>()

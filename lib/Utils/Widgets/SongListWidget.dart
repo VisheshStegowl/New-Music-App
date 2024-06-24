@@ -51,7 +51,7 @@ class SongListWidget extends StatelessWidget {
               title: AppTextWidget(
                   txtTitle: title,
                   fontWeight: FontWeight.w800,
-                  fontSize: 18,
+                  fontSize: 16,
                   txtColor: AppColors.white),
               subtitle: isPlayList
                   ? null

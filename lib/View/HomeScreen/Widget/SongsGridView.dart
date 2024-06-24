@@ -18,6 +18,7 @@ class SongsGridView extends StatelessWidget {
   final Function()? songOnTap;
   final int? itemCount;
   final List? items;
+  final String? type;
 
   const SongsGridView(
       {super.key,
@@ -25,6 +26,7 @@ class SongsGridView extends StatelessWidget {
       required this.title,
       this.titleOnTap,
       this.itemCount,
+      this.type,
       this.items,
       this.songOnTap});
 
@@ -81,20 +83,28 @@ class SongsGridView extends StatelessWidget {
                             InkWell(
                               onTap: songOnTap ??
                                   () {
-                                    AppConst.liveVideoUrl.value = false;
-                                    Get.find<HomeController>().playSong(
-                                        assests:
-                                            items as List<AssestsSong> ?? [],
-                                        index: index);
-                                    Navigator.push(context, PageRouteBuilder(
-                                        pageBuilder: (_, __, ___) {
-                                      return SongPlayScreen(
-                                        menuId: items?[index].menuId ?? 0,
-                                        songId: items?[index].songId ?? 0,
-                                        // index: index ?? 0,
-                                        // assests: items as List<AssestsSong>,
-                                      );
-                                    }));
+                                    if (type == "Music") {
+                                      AppConst.liveVideoUrl.value = false;
+                                      Get.find<HomeController>().playSong(
+                                          assests:
+                                              items as List<AssestsSong> ?? [],
+                                          index: index);
+                                      Navigator.push(context, PageRouteBuilder(
+                                          pageBuilder: (_, __, ___) {
+                                        return SongPlayScreen(
+                                          menuId: items?[index].menuId ?? 0,
+                                          songId: items?[index].songId ?? 0,
+                                          // index: index ?? 0,
+                                          // assests: items as List<AssestsSong>,
+                                        );
+                                      }));
+                                    } else {
+                                      Get.find<HomeController>()
+                                          .getCategorySongList(
+                                              title: items?[index].categoryName,
+                                              id: items?[index].categoryId ?? 0,
+                                              context: context);
+                                    }
                                   },
                               child: Stack(
                                 children: [

@@ -141,7 +141,7 @@ class AuthController extends BaseController {
   }
 
   WalkthroughDataModel? walkthroughDataModel;
-  RxInt pageIndex = 1.obs;
+  RxInt pageIndex = 0.obs;
 
   Future<void> walkthroughApi() async {
     try {

@@ -6,10 +6,17 @@ import 'package:new_music_app/Utils/Styling/AppColors.dart';
 import 'package:new_music_app/Utils/Widgets/AppTextWidget.dart';
 
 class TitleBackButtonWidget extends StatelessWidget {
-  final String title;
+  final String? title;
+  final bool iconShow;
+  final Widget? customTitle;
   final Function()? onTap;
 
-  const TitleBackButtonWidget({super.key, required this.title, this.onTap});
+  const TitleBackButtonWidget(
+      {super.key,
+      this.title,
+      this.onTap,
+      this.iconShow = true,
+      this.customTitle});
 
   @override
   Widget build(BuildContext context) {
@@ -20,21 +27,23 @@ class TitleBackButtonWidget extends StatelessWidget {
             () {
               Get.back();
             },
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              AppAssets.backIcon,
-              height: 20.h,
-            ),
-            10.horizontalSpace,
-            AppTextWidget(
-              txtTitle: title,
-              fontSize: 16,
-              txtColor: AppColors.white,
-            )
-          ],
-        ),
+        child: iconShow
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    AppAssets.backIcon,
+                    height: 20.h,
+                  ),
+                  10.horizontalSpace,
+                  AppTextWidget(
+                    txtTitle: title ?? '',
+                    fontSize: 16,
+                    txtColor: AppColors.white,
+                  )
+                ],
+              )
+            : customTitle,
       ),
     );
   }

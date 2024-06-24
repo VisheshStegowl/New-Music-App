@@ -234,7 +234,6 @@ class MenuPageController extends BaseController {
       final response = await _homeChopperService.notificationApi(param: param);
       if (response.isSuccessful) {
         notificationDataModel.value = response.body;
-        Utility.showSnackBar(response.body?.message);
         update();
       }
     } catch (e) {

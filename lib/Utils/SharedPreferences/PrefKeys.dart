@@ -5,4 +5,5 @@ class PrefKeys {
   static const String firstTime = "firstTime";
   static const String userId = "userId";
   static const String password = "password";
+  static const String categoryName = "categoryName";
 }

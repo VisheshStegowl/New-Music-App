@@ -10,13 +10,16 @@ import 'package:new_music_app/Utils/ChopperClientService/HomeChopperService.dart
 import 'package:new_music_app/Utils/Constants/AppConst.dart';
 import 'package:new_music_app/Utils/Constants/AppExtension.dart';
 import 'package:new_music_app/Utils/Constants/CustomSnackBar.dart';
+import 'package:new_music_app/Utils/Models/CategoriesSongDataModel.dart';
 import 'package:new_music_app/Utils/Models/FavoritesSongListModel.dart' as data;
 import 'package:new_music_app/Utils/Models/FavouritesDataModel.dart';
 import 'package:new_music_app/Utils/Models/HomeBannerModel.dart';
 import 'package:new_music_app/Utils/Models/HomeDataModel.dart';
+import 'package:new_music_app/Utils/Models/ViewAllCategoryDataModel.dart';
 import 'package:new_music_app/Utils/Services/AdService.dart';
 import 'package:new_music_app/Utils/SharedPreferences/PrefKeys.dart';
 import 'package:new_music_app/Utils/SharedPreferences/shared_preferences.dart';
+import 'package:new_music_app/View/HomeScreen/CategoryViewList.dart';
 import 'package:share_plus/share_plus.dart';
 
 class HomeController extends BaseController {
@@ -285,6 +288,63 @@ class HomeController extends BaseController {
     } else {
       favoriteSongListModel.value = null;
       getFavoritesList();
+    }
+  }
+
+//get category songs listing
+  CategoriesSongDataModel? categoriesSongDataModel;
+
+  Future<void> getCategorySongList(
+      {required int id,
+      required String title,
+      required BuildContext context,
+      bool isViewAll = false}) async {
+    try {
+      final param = {
+        "device": UserPreference.getValue(key: PrefKeys.deviceType),
+        "token": UserPreference.getValue(key: PrefKeys.logInToken),
+      };
+
+      final queryParameters = {"limit": 15, "page": 1};
+      final response = await _homeChopperService.categoriesSongApi(
+          param: param, queryParameters: queryParameters, id: id);
+      if (response.isSuccessful) {
+        categoriesSongDataModel = response.body;
+
+        update();
+        if (!isViewAll) {
+          UserPreference.setValue(key: PrefKeys.categoryName, value: title);
+          Scaffold.of(context).openEndDrawer();
+        }
+      }
+    } catch (e) {
+      log("", error: e.toString(), name: 'get category song error api');
+    }
+  }
+
+  ViewAllCategoryDataModel? viewAllCategoryDataModel;
+
+  Future<void> getCategoryList(
+      {required int id, required BuildContext context}) async {
+    try {
+      final param = {
+        "device": UserPreference.getValue(key: PrefKeys.deviceType),
+        "token": UserPreference.getValue(key: PrefKeys.logInToken),
+      };
+      final queryParameters = {"limit": 15, "page": 1};
+
+      final response = await _homeChopperService.viewAllCategoriesApi(
+          param: param, id: id, queryParameters: queryParameters);
+      if (response.isSuccessful) {
+        viewAllCategoryDataModel = response.body;
+        Navigator.push(
+            context,
+            PageRouteBuilder(
+                pageBuilder: (_, __, ___) => const CategoryViewList()));
+        update();
+      }
+    } catch (e) {
+      log("", error: e.toString(), name: "Get all category");
     }
   }
 }

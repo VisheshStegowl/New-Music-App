@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -14,6 +15,7 @@ import 'package:new_music_app/Utils/Widgets/AnimatedBottomsheet.dart';
 import 'package:new_music_app/Utils/Widgets/AppLoder.dart';
 import 'package:new_music_app/Utils/Widgets/AppNavigationBar.dart';
 import 'package:new_music_app/Utils/Widgets/AppTextWidget.dart';
+import 'package:new_music_app/Utils/Widgets/CachedNetworkImageWidget.dart';
 import 'package:new_music_app/Utils/Widgets/Dialogs/AddPlaylistDialog.dart';
 import 'package:new_music_app/Utils/Widgets/Dialogs/SongAddToDialog.dart';
 import 'package:new_music_app/Utils/Widgets/SongListWidget.dart';
@@ -30,7 +32,6 @@ class SongViewList extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    List<NativeAd> nativeAd = [];
     return Stack(
       children: [
         SafeArea(
@@ -169,8 +170,6 @@ class SongViewList extends GetView<HomeController> {
                                           request: const AdRequest(),
                                         )..load());
 
-                                    // print(
-                                    //     "this is nativeads called ${Get.find<AdService>().nativeads.length}");
                                     return Column(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [

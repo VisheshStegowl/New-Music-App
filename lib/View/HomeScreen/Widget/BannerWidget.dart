@@ -18,7 +18,7 @@ class BannerWidget extends GetView<HomeController> {
           return Column(
             children: [
               CarouselSlider.builder(
-                itemCount: controller.banner.value?.data?.length ?? 0,
+                itemCount: controller.banner.value?.data?.length ?? 1,
                 options: CarouselOptions(
                   onPageChanged: (index, reason) {
                     controller.bannerIndex.value = index;
@@ -34,10 +34,13 @@ class BannerWidget extends GetView<HomeController> {
                   autoPlay: true,
                 ),
                 itemBuilder: (context, index, realIndex) =>
-                    CachedNetworkImageWidget(
-                  fit: BoxFit.fill,
-                  image: "${controller.banner.value?.data?[index].image ?? ''}",
-                ),
+                    controller.banner.value?.data?.isNotEmpty ?? false
+                        ? CachedNetworkImageWidget(
+                            fit: BoxFit.fill,
+                            image:
+                                "${controller.banner.value?.data?[index].image ?? ''}",
+                          )
+                        : SizedBox(),
               ),
               5.verticalSpace,
               Row(

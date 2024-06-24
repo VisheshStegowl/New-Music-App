@@ -5,7 +5,9 @@ import 'package:get/get.dart';
 import 'package:new_music_app/Controller/HomeController.dart';
 import 'package:new_music_app/Utils/Constants/AppAssets.dart';
 import 'package:new_music_app/Utils/Constants/AppConst.dart';
+import 'package:new_music_app/Utils/Services/AdService.dart';
 import 'package:new_music_app/Utils/Widgets/AppLoder.dart';
+import 'package:new_music_app/View/HomeScreen/CategoryViewList.dart';
 import 'package:new_music_app/View/HomeScreen/SongViewList.dart';
 import 'package:new_music_app/View/HomeScreen/Widget/BannerWidget.dart';
 import 'package:new_music_app/View/HomeScreen/Widget/SongsGridView.dart';
@@ -50,30 +52,46 @@ class HomeScreen extends GetView<HomeController> {
                                   SongsGridView(
                                     titleOnTap: () {
                                       AppConst.liveVideoUrl.value = false;
-                                      Navigator.push(context, PageRouteBuilder(
-                                          pageBuilder: (_, __, ___) {
-                                        return SongViewList(
-                                          assestsDataIndex: index,
-                                          title: controller.homeData.value
-                                                  ?.data?[index].name ??
-                                              '',
-                                          assests: controller.homeData.value
-                                              ?.data?[index].assests,
+                                      if (controller.homeData.value
+                                              ?.data?[index].type ==
+                                          "Music") {
+                                        Get.find<AdService>().bannerAds = [];
+                                        Navigator.push(context,
+                                            PageRouteBuilder(
+                                                pageBuilder: (_, __, ___) {
+                                          return SongViewList(
+                                            assestsDataIndex: index,
+                                            title: controller.homeData.value
+                                                    ?.data?[index].name ??
+                                                '',
+                                            assests: controller.homeData.value
+                                                ?.data?[index].assests,
+                                          );
+                                        }));
+                                      } else {
+                                        controller.getCategoryList(
+                                          context: context,
+                                          id: controller.homeData.value
+                                                  ?.data?[index].categoryId ??
+                                              0,
                                         );
-                                      }));
+                                        // Navigator.push(context, PageRouteBuilder(pageBuilder: (_,__,___){return CategoryViewList()}));
+                                      }
                                     },
                                     title: controller.homeData.value
                                             ?.data?[index].name ??
                                         '',
                                     itemCount: controller.homeData.value
                                         ?.data?[index].assests?.length,
+                                    type: controller
+                                        .homeData.value?.data?[index].type,
                                     items: controller
                                         .homeData.value?.data?[index].assests,
                                   ),
                                 ],
                               );
                             } else {
-                              return Column(
+                              return const Column(
                                 children: [AppLoder()],
                               );
                             }

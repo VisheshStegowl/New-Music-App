@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:chopper/chopper.dart';
 import 'package:new_music_app/Utils/Models/AddSongPlaylistDataModel.dart';
+import 'package:new_music_app/Utils/Models/CategoriesSongDataModel.dart';
 import 'package:new_music_app/Utils/Models/CreatePlayListModel.dart';
 import 'package:new_music_app/Utils/Models/FavoritesSongListModel.dart';
 import 'package:new_music_app/Utils/Models/FavouriteVideoModel.dart';
@@ -23,6 +24,7 @@ import 'package:new_music_app/Utils/Models/SocialMediaModel.dart';
 import 'package:new_music_app/Utils/Models/SponsorBannerDataModel.dart';
 import 'package:new_music_app/Utils/Models/VideoCategoryDataListModel.dart';
 import 'package:new_music_app/Utils/Models/VideoCategoryDataModel.dart';
+import 'package:new_music_app/Utils/Models/ViewAllCategoryDataModel.dart';
 import 'package:new_music_app/Utils/Models/WalkthroughDataModel.dart';
 
 part 'HomeChopperService.chopper.dart';
@@ -50,6 +52,18 @@ abstract class HomeChopperService extends ChopperService {
   @Post(path: 'categoryitems')
   Future<Response<VideoCategoryDataListModel>> videoCategoryItemsApi(
       {@body required Map<String, dynamic> param,
+      @QueryMap() required Map<String, dynamic> queryParameters});
+
+  @Post(path: 'audiolisting/category_id/{id}')
+  Future<Response<CategoriesSongDataModel>> categoriesSongApi(
+      {@body required Map<String, dynamic> param,
+      @Path('id') required int id,
+      @QueryMap() required Map<String, dynamic> queryParameters});
+
+  @Post(path: 'audiosubcategories/{id}')
+  Future<Response<ViewAllCategoryDataModel>> viewAllCategoriesApi(
+      {@body required Map<String, dynamic> param,
+      @Path('id') required int id,
       @QueryMap() required Map<String, dynamic> queryParameters});
 
   @Post(path: 'menuitems')
